@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n = 5;
+    int graph[5][5] = {
+        {0, 2, 0, 6, 0},
+        {2, 0, 3, 8, 5},
+        {0, 3, 0, 0, 7},
+        {6, 8, 0, 0, 9},
+        {0, 5, 7, 9, 0}
+    };
+
+    bool used[5] = {false};
+    used[0] = true;
+
+    int edges = 0, cost = 0;
+
+    while (edges < n - 1) {
+        int min = 999, x = 0, y = 0;
+
+        for (int i = 0; i < n; i++)
+            if (used[i])
+                for (int j = 0; j < n; j++)
+                    if (!used[j] && graph[i][j] && graph[i][j] < min)
+                        min = graph[i][j], x = i, y = j;
+
+        cout << x << " - " << y << " : " << min << endl;
+        cost += min;
+        used[y] = true;
+        edges++;
+    }
+
+    cout << "Minimum cost = " << cost;
+}
